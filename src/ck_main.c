@@ -36,6 +36,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef NXDK
+#include <windows.h>
+#include <nxdk/mount.h>
+#include <hal/video.h>
+#include <hal/debug.h>
+#endif
+
 #ifdef WITH_SDL
 #include <SDL.h> // For main (SDL_main) function prototype
 #endif
@@ -634,6 +641,106 @@ CK_EpisodeDef *ck_episodes[] = {
 
 int main(int argc, char *argv[])
 {
+#ifdef NXDK
+	/* Initialise Xbox video */
+	XVideoSetMode(640, 480, 32, REFRESH_DEFAULT);
+
+	/* Setup save directories for Xbox */
+	nxMountDrive('E', "\\Device\\Harddisk0\\Partition1\\");
+	CreateDirectoryA("E:\\UDATA\\Keen", NULL);
+	CreateDirectoryA("E:\\UDATA\\Keen\\Saves", NULL);
+	CreateDirectoryA("E:\\UDATA\\Keen\\Settings", NULL);
+
+	/* Copy title image to game profile */
+	FILE *titleImageFileSrc = fopen("D:\\xbox\\TitleImage.xbx", "rb");
+	FILE *titleImageFileDest = fopen("E:\\UDATA\\Keen\\TitleImage.xbx", "wb");
+	if (titleImageFileSrc != NULL && titleImageFileDest != NULL)
+	{
+		int c = fgetc(titleImageFileSrc);
+		while (c != EOF)
+		{
+			fputc(c, titleImageFileDest);
+			c = fgetc(titleImageFileSrc);
+		}
+	}
+	if (titleImageFileDest)
+		fclose(titleImageFileDest);
+	if (titleImageFileSrc)
+		fclose(titleImageFileSrc);
+
+	FILE *fp;
+	fp = fopen("E:\\UDATA\\Keen\\TitleMeta.xbx", "wb");
+	if (fp)
+	{
+		fprintf(fp, "TitleName=Commander Keen (omnispeak)\r\n");
+		fclose(fp);
+	}
+
+	fp = fopen("E:\\UDATA\\Keen\\Saves\\SaveMeta.xbx", "wb");
+	if (fp)
+	{
+		fprintf(fp, "Name=Saves\r\n");
+		fclose(fp);
+	}
+
+	fp = fopen("E:\\UDATA\\Keen\\Settings\\SaveMeta.xbx", "wb");
+	if (fp)
+	{
+		fprintf(fp, "Name=Settings\r\n");
+		fclose(fp);
+	}
+
+	/* Let's make a quick and simple menu to select Episode */
+	char episode[] = "6v15";
+	SDL_Init(SDL_INIT_GAMECONTROLLER);
+	SDL_GameController *gamepad = SDL_GameControllerOpen(0);
+
+	if (gamepad == NULL)
+	{
+		debugPrint("No compatible controller connected.\n\n");
+		debugPrint("Restart Xbox and try again\n\n");
+		while (1);
+	}
+	debugPrint("Omnispeak - A Commander Keen Reimplementation\n\n");
+	debugPrint("Press A to Start Keen 4\n\n");
+	debugPrint("Press B to Start Keen 5\n\n");
+	debugPrint("Press X to Start Keen 6\n\n");
+	debugPrint("https://github.com/Ryzee119/omnispeak\n\n");
+	while (1)
+	{
+		SDL_GameControllerUpdate();
+		if (SDL_GameControllerGetButton(gamepad, SDL_CONTROLLER_BUTTON_A))
+		{
+			strcpy(episode, "4");
+			break;
+		}
+		if (SDL_GameControllerGetButton(gamepad, SDL_CONTROLLER_BUTTON_B))
+		{
+			strcpy(episode, "5");
+			break;
+		}
+		if (SDL_GameControllerGetButton(gamepad, SDL_CONTROLLER_BUTTON_X))
+		{
+			strcpy(episode, "6v15");
+			break;
+		}
+		Sleep(50);
+	}
+	debugClearScreen();
+	SDL_GameControllerClose(0);
+	SDL_Quit();
+
+	/* Inject args */
+	argc = 6;
+	argv = malloc(sizeof(char *) * argc);
+	for (int i = 0; i < argc; i++)
+		argv[i] = malloc(32);
+	strcpy(argv[0], "D:\\default.xbe");
+	strcpy(argv[1], "/EPISODE");
+	strcpy(argv[2], episode);
+	strcpy(argv[3], "/FULLSCREEN");
+	strcpy(argv[4], "/NOCOPY");
+#endif
 	// Send the cmd-line args to the User Manager.
 	us_argc = argc;
 	us_argv = (const char **)argv;
@@ -743,6 +850,15 @@ int main(int argc, char *argv[])
 		ck_currentEpisode->hasCreatureQuestion = false;
 
 	CK_InitGame();
+
+#ifdef NXDK //Force the correct controller config
+	IN_SetControlType(0, IN_ctrl_Joystick1);
+	IN_SetControlType(1, IN_ctrl_Joystick1);
+	IN_SetJoyConf(IN_joy_jump, IN_joy_jump);
+	IN_SetJoyConf(IN_joy_pogo, IN_joy_pogo);
+	IN_SetJoyConf(IN_joy_fire, IN_joy_fire);
+	IN_SetJoyConf(IN_joy_deadzone, 60);
+#endif
 
 	for (int i = 1; i < argc; ++i)
 	{
