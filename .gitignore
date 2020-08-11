@@ -3,3 +3,9 @@ SDL-1.*
 ._SDL-1.*
 bin*
 obj*
+.vscode*
+keen_data*
+*.d
+*.obj
+*.iso
+*.exe
