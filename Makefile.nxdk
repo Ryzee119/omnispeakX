@@ -1,0 +1,69 @@
+XBE_TITLE = CommanderKeen
+GEN_XISO = $(XBE_TITLE).iso
+
+NXDK_SDL = y
+
+SRCS += \
+	src/ck4_map.c \
+	src/ck4_misc.c \
+	src/ck4_obj1.c \
+	src/ck4_obj2.c \
+	src/ck4_obj3.c \
+	src/ck5_map.c \
+	src/ck5_misc.c \
+	src/ck5_obj1.c \
+	src/ck5_obj2.c \
+	src/ck5_obj3.c \
+	src/ck6_map.c \
+	src/ck6_misc.c \
+	src/ck6_obj1.c \
+	src/ck6_obj2.c \
+	src/ck6_obj3.c \
+	src/ck_act.c \
+	src/ck_cross.c \
+	src/ck_game.c \
+	src/ck_inter.c \
+	src/ck_keen.c \
+	src/ck_main.c \
+	src/ck_map.c \
+	src/ck_misc.c \
+	src/ck_obj.c \
+	src/ck_phys.c \
+	src/ck_play.c \
+	src/ck_quit.c \
+	src/ck_text.c \
+	src/icon.c \
+	src/id_ca.c \
+	src/id_in.c \
+	src/id_in_sdl.c \
+	src/id_mm.c \
+	src/id_rf.c \
+	src/id_sd.c \
+	src/id_sd_sdl.c \
+	src/id_str.c \
+	src/id_ti.c \
+	src/id_us_1.c \
+	src/id_us_2.c \
+	src/id_us_textscreen.c \
+	src/id_vh.c \
+	src/id_vl.c \
+	src/id_vl_sdl2.c \
+	src/opl/dbopl.c
+
+CFLAGS += -I$(CURDIR)/src -I$(CURDIR)/src/opl -O2 -DWITH_SDL -DVL_SDL2_REQUEST_SOFTWARE
+
+new_all: copy_resources all
+
+include $(NXDK_DIR)/Makefile
+
+copy_resources:
+	@mkdir -p $(OUTPUT_DIR)
+	@mkdir -p $(OUTPUT_DIR)/keen_data
+	@mkdir -p $(OUTPUT_DIR)/omnispeak_data
+	@mkdir -p $(OUTPUT_DIR)/xbox
+	@cp -r $(CURDIR)/xbox/* $(OUTPUT_DIR)/xbox/
+	@cp -r $(CURDIR)/data/keen4/* $(OUTPUT_DIR)/omnispeak_data/
+	@cp -r $(CURDIR)/data/keen5/* $(OUTPUT_DIR)/omnispeak_data/
+	@cp -r $(CURDIR)/data/keen6e15/* $(OUTPUT_DIR)/omnispeak_data/
+	@cp -r $(CURDIR)/LICENSE $(OUTPUT_DIR)/LICENSE.txt
+	@cp -r $(CURDIR)/README $(OUTPUT_DIR)/README.txt
