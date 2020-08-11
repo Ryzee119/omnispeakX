@@ -178,12 +178,53 @@ bool CA_IsFilePresent(const char *filename)
 // valid until the NEXT invocation of this function.
 char *CAL_AdjustExtension(const char *filename)
 {
-	static char newname[16];
+	static char newname[256];
 	strcpy(newname, filename);
 	size_t fnamelen = strlen(filename);
 	newname[fnamelen - 3] = ck_currentEpisode->ext[0];
 	newname[fnamelen - 2] = ck_currentEpisode->ext[1];
 	newname[fnamelen - 1] = ck_currentEpisode->ext[2];
+
+#ifdef NXDK
+	char xbox_filename[256];
+	for (;;)
+	{
+		//If its a save game, return the save path
+		if (strncmp(filename, "SAVEGAM", 7) == 0)
+		{
+			sprintf(xbox_filename, "E:\\UDATA\\Keen\\Saves\\%s", newname);
+			break;
+		}
+
+		//If its the config file, return the settings path
+		if (strncmp(filename, "CONFIG", 6) == 0)
+		{
+			sprintf(xbox_filename, "E:\\UDATA\\Keen\\Settings\\%s", newname);
+			break;
+		}
+
+		//Otherwise, search the xbox folders
+		sprintf(xbox_filename, "%s", newname);
+		if (GetFileAttributes(xbox_filename) != INVALID_FILE_ATTRIBUTES)
+			break;
+
+		sprintf(xbox_filename, "D:\\omnispeak_data\\%s", newname);
+		if (GetFileAttributes(xbox_filename) != INVALID_FILE_ATTRIBUTES)
+			break;
+
+		sprintf(xbox_filename, "D:\\keen_data\\%s", newname);
+		if (GetFileAttributes(xbox_filename) != INVALID_FILE_ATTRIBUTES)
+			break;
+
+		sprintf(xbox_filename, "D:\\%s", newname);
+		if (GetFileAttributes(xbox_filename) != INVALID_FILE_ATTRIBUTES)
+			break;
+
+		sprintf(xbox_filename, "%s", newname);
+		break;
+	}
+	strncpy(newname, xbox_filename, sizeof(newname));
+#endif
 	if (!CAL_AdjustFilenameCase(newname))
 	{
 		CK_Cross_LogMessage(CK_LOG_MSG_ERROR, "Couldn't find file \"%s\" in the current directory.\n", newname);
