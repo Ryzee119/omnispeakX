@@ -643,7 +643,7 @@ int main(int argc, char *argv[])
 {
 #ifdef NXDK
 	/* Initialise Xbox video */
-	XVideoSetMode(640, 480, 32, REFRESH_DEFAULT);
+	XVideoSetMode(640, 480, 16, REFRESH_DEFAULT);
 
 	/* Setup save directories for Xbox */
 	nxMountDrive('E', "\\Device\\Harddisk0\\Partition1\\");
