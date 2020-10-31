@@ -330,6 +330,18 @@ static void IN_SDL_HandleSDLEvent(SDL_Event *event)
 				INL_StopJoy(i);
 		}
 		break;
+	case SDL_JOYBUTTONDOWN:
+		if (event->jbutton.button == 7)
+			IN_HandleKeyDown(IN_SC_Escape, 0);
+		if (event->jbutton.button == 6)
+			IN_HandleKeyDown(IN_SC_Enter, 0);
+		break;
+	case SDL_JOYBUTTONUP:
+		if (event->jbutton.button == 7)
+			IN_HandleKeyUp(IN_SC_Escape, 0);
+		if (event->jbutton.button == 6)
+			IN_HandleKeyUp(IN_SC_Enter, 0);
+		break;
 #endif
 	}
 }
