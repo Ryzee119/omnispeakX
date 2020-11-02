@@ -35,52 +35,24 @@ them in the same directory as the 'omnispeak' binary:
 You'll also need the files from the 'data' directory corresponding to your
 version of Keen. 
 
-To run the game, simply switch to the directory with the data files, and run:
-	./omnispeak
-
-You can provide Omnispeak the following command-line arguments:
-	/EPISODE <4,5,6,6v14,6v15>
-		- Runs the given episode/version of Commander Keen
-	/FULLSCREEN
-		- Starts the game in fullscreen mode
-	/FILLED
-		- Starts the game with aspect-ratio correction off.
-	/NOBORDER
-		- Starts the game with EGA overscan border emulation off.
-	/INTEGER
-		- Starts the game with integer scaling enabled.
-	/NOJOYS
-		- Disables Joystick detection.
-	/NOCOPY
-		- Bypasses the "Creature Question" screen in Keen 6.
-	/NOAUDIOSYNC
-		- When using SDL-based sound backends, use the system clock
-		  rather than the audio clock.
-		  (Works around issues with some SDL audio backends under wine)
-	/DEMOFILE <filename>
-		- Plays the demo recorded with Keen's F10+D cheat in filename.
-
-
 == COMPILING ==
+Setup and install nxdk (https://github.com/XboxDev/nxdk) then:
+make -f Makefile.nxdk NXDK_DIR=/path/to/nxdk
 
-The source code for Omnispeak is available on GitHub:
-	https://github.com/sulix/omnispeak
+You will need the put the game files in the keen_data folder. The data structure should look like this:
 
-You'll find it in the src/ directory and built with make.
-
-Omnispeak should build fine on most Linux distributions.
-
-You'll need to have the Simple Directmedia Layer 2.0 installed, with the
-sdl2-config program somewhere in your path.
-
-When compiled, an 'omnispeak' binary will appear in 'bin/', along with
-the files from the 'data' directories.
-
-Cross-compilation for 32-bit and 64-bit Windows targets using MinGW32-Win64
-is also supported.
-
-To see a full list of build options, just run `make help`.
-
+default.xbe
+LICENSE.txt
+keen_data/
+--AUDIO.CK4/CK5/Ck6
+--EGAGRAPH.CK4/CK5/Ck6
+--GAMEMAPS.CK4/CK5/Ck6
+omnispeak_data/
+--ACTION.CK4
+--etc.
+xbox/
+--TitleImage.xbx
+--TitleImage.jpg
 
 == KNOWN ISSUES ==
 
