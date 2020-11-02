@@ -31,10 +31,8 @@ jobs:
       run: |
         wget https://davidgow.net/keen/4keen14.zip
         unzip 4keen14.zip -d 4keen14
-        ls
-        cd 4keen14
-        ls
-        cd ..
+        mkdir bin
+        mkdir bin/keen_data
         cp -a 4keen14/. bin/keen_data
 
     - name: Compile
