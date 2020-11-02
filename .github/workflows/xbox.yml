@@ -44,7 +44,7 @@ jobs:
 
     # Only create artifact on a push
     # - if: github.event_name == 'push' 
-    name: Upload Artifact
+    - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: ${{ env.FILENAME_XBOX }}
