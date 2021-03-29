@@ -689,7 +689,6 @@ int main(int argc, char *argv[])
 		fprintf(fp, "Name=Settings\r\n");
 		fclose(fp);
 	}
-
 	/* Let's make a quick and simple menu to select Episode */
 	char episode[] = "6v15";
 	SDL_Init(SDL_INIT_GAMECONTROLLER);
@@ -731,7 +730,7 @@ int main(int argc, char *argv[])
 	SDL_Quit();
 
 	/* Inject args */
-	argc = 6;
+	argc = 5;
 	argv = malloc(sizeof(char *) * argc);
 	for (int i = 0; i < argc; i++)
 		argv[i] = malloc(32);
