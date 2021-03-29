@@ -470,11 +470,6 @@ bool INL_StartJoy(int joystick)
 void INL_StopJoy(int joystick)
 {
 	in_backend->joyStop(joystick);
-
-	// If the joystick is unplugged, switch to keyboard immediately.
-	if (in_controlType == IN_ctrl_Joystick1 + joystick)
-		in_controlType = IN_ctrl_Keyboard1;
-
 	CK_US_UpdateOptionsMenus();
 }
 
