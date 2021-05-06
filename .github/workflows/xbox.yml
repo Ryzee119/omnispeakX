@@ -21,7 +21,6 @@ jobs:
     - name: Install and Setup Dependencies
       run: |
         sudo apt-get update -y && sudo apt-get install -y flex bison clang lld unzip
-        cd ~
         git clone https://github.com/XboxDev/nxdk.git --recursive
 
     - name: Get Keen data
