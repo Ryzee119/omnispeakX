@@ -2,9 +2,9 @@ name: Build
 
 on:
   pull_request:
-    branches: [ xbox-rebase ]
+    branches: [ xbox ]
   push:
-    branches: [ xbox-rebase ]
+    branches: [ xbox ]
 
 jobs:        
   #BUILD XBOX
