@@ -256,9 +256,17 @@ void CAL_CarmackExpand(void *src, void *dest, int expLength)
 	uint16_t *runptr;
 	uint16_t ch, count, offset;
 	expLength /= 2; //We're dealing with two-byte words
+	uint8_t* tmp8_0, *tmp8_1;
+	uint16_t tmp16;
 	while (expLength > 0)
 	{
-		ch = CAL_ReadWord(srcptr++);
+		//Hack: No idea why this is needed
+		tmp8_0 = (uint8_t*)srcptr;
+		tmp8_1 = tmp8_0 + 1;
+		tmp16 = *tmp8_1 << 8 | *tmp8_0;
+		ch = tmp16;
+		srcptr++;
+		//ch = CAL_ReadWord(srcptr++);
 		if ((ch & 0xff00) == CA_CARMACK_NEARTAG)
 		{
 			count = ch & 0xff;
@@ -295,7 +303,12 @@ void CAL_CarmackExpand(void *src, void *dest, int expLength)
 			}
 			else
 			{
-				offset = CAL_ReadWord(srcptr++);
+				//offset = CAL_ReadWord(srcptr++);
+				tmp8_0 = (uint8_t*)srcptr;
+				tmp8_1 = tmp8_0 + 1;
+				tmp16 = *tmp8_1 << 8 | *tmp8_0;
+				offset = tmp16;
+				srcptr++;
 				runptr = (uint16_t *)dest + offset; //(uint16_t*)offset;
 				expLength -= count;
 				while (count--)
