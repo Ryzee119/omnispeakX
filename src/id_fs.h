@@ -28,7 +28,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <stdbool.h>
 #include <stdio.h>
 
+#ifdef _LIBDRAGON
+typedef int FS_File;
+#else
 typedef FILE *FS_File;
+#endif
 
 bool FS_IsFileValid(FS_File file);
 
