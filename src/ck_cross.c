@@ -17,7 +17,7 @@ void CK_Cross_LogMessage(CK_Log_Message_Class_T msgClass, const char *format, ..
 	switch (msgClass)
 	{
 	case CK_LOG_MSG_NORMAL:
-		vprintf(format, args);
+		vfprintf(stderr, format, args);
 		break;
 	case CK_LOG_MSG_WARNING:
 		fprintf(stderr, "Warning: ");
@@ -29,6 +29,7 @@ void CK_Cross_LogMessage(CK_Log_Message_Class_T msgClass, const char *format, ..
 		break;
 	}
 	va_end(args);
+	fflush(stderr);
 }
 
 #ifdef CK_RAND_DEBUG
@@ -51,7 +52,9 @@ void CK_Cross_puts(const char *str)
 {
 	// Reason for this wrapper: Maybe a different
 	// mechanism will be used in the future.
-	puts(str);
+	//puts(str);
+	fprintf(stderr, str);
+	fflush(stderr);
 }
 
 int CK_Cross_toupper(int c)

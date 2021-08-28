@@ -571,8 +571,8 @@ void RFL_AnimateTiles()
 
 			if (screenTileX < 0 || screenTileX > RF_BUFFER_WIDTH_TILES || screenTileY < 0 || screenTileY > RF_BUFFER_HEIGHT_TILES)
 			{
-				//printf("Out of bounds: %d, %d (sc: %d,%d) (tl: %d,%d,%d):%d\n", screenTileX, screenTileY,
-				//	rf_scrollXUnit >> 8, rf_scrollYUnit >> 8, ost->tileX, ost->tileY,ost->plane, ost->tile);
+				fprintf(stderr, "Out of bounds: %d, %d (sc: %d,%d) (tl: %d,%d,%d):%04x\n", screenTileX, screenTileY,
+					rf_scrollXUnit >> 8, rf_scrollYUnit >> 8, ost->tileX, ost->tileY,ost->plane, ost->tile);
 				Quit("RFL_AnimateTiles: Out of bounds!");
 			}
 
