@@ -109,7 +109,7 @@ static char in_ASCIINames[] = // Unshifted ASCII for scan codes
 
 bool in_Paused;
 const char *in_PausedMessage = "PAUSED";
-IN_ControlType in_controlType = IN_ctrl_Keyboard1;
+IN_ControlType in_controlType = IN_ctrl_Joystick1;
 bool in_keyStates[256];
 IN_ScanCode in_lastKeyScanned = IN_SC_None;
 char in_lastASCII;
@@ -386,7 +386,7 @@ void IN_Startup(void)
 // TODO: IMPLEMENT!
 void IN_Default(bool gotit, int16_t inputChoice)
 {
-	in_controlType = (IN_ControlType)inputChoice;
+	//in_controlType = (IN_ControlType)inputChoice;
 }
 
 uint8_t *in_demoBuf;
@@ -484,8 +484,8 @@ void INL_StopJoy(int joystick)
 	in_backend->joyStop(joystick);
 
 	// If the joystick is unplugged, switch to keyboard immediately.
-	if (in_controlType == IN_ctrl_Joystick1 + joystick)
-		in_controlType = IN_ctrl_Keyboard1;
+	//if (in_controlType == IN_ctrl_Joystick1 + joystick)
+	//	in_controlType = IN_ctrl_Keyboard1;
 
 	CK_US_UpdateOptionsMenus();
 }
