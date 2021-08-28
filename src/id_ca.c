@@ -40,6 +40,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #define CA_THREEBYTEHEADERS
 
+#ifndef _LIBDRAGON
 // For chdir
 #ifdef _MSC_VER
 #include <direct.h>
@@ -110,6 +111,7 @@ bool CAL_AdjustFilenameCase(char *filename)
 	return (fileAttribs != INVALID_FILE_ATTRIBUTES);
 }
 #endif
+#endif //_LIBDRAGON
 
 //Begin globals
 
