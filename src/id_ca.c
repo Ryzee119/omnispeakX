@@ -179,7 +179,7 @@ bool CA_LoadFile(const char *filename, mm_ptr_t *ptr, int *memsize)
 
 	int amountRead = FS_Read(*ptr, 1, length, f);
 
-	fclose(f);
+	FS_CloseFile(f);
 
 	if (amountRead != length)
 		return false;
@@ -254,7 +254,6 @@ void CAL_CarmackExpand(void *src, void *dest, int expLength)
 	uint16_t *runptr;
 	uint16_t ch, count, offset;
 	expLength /= 2; //We're dealing with two-byte words
-
 	while (expLength > 0)
 	{
 		ch = CAL_ReadWord(srcptr++);
@@ -905,7 +904,7 @@ void CAL_SetupMapFile(void)
 
 static ca_huffnode *ca_audiohuffman;
 
-static FILE *ca_audiohandle; //File Pointer for AUDIO file.
+static FS_File ca_audiohandle; //File Pointer for AUDIO file.
 int32_t *ca_audiostarts;
 
 void CAL_SetupAudioFile(void)
