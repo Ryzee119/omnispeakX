@@ -972,10 +972,12 @@ void US_RunCards()
 				action_taken = true;
 				break;
 			case IN_SC_Enter:
+			case IN_SC_A:
 				US_SelectCurrentItem();
 				action_taken = true;
 				break;
 			case IN_SC_Escape:
+			case IN_SC_B:
 				USL_UpLevel();
 				action_taken = true;
 				break;
