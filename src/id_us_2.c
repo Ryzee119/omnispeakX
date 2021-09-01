@@ -627,7 +627,7 @@ void USL_UpLevel()
 {
 	if (!us_cardStackIndex)
 	{
-		USL_ConfirmComm(US_Comm_Quit);
+		//USL_ConfirmComm(US_Comm_Quit);
 		return;
 	}
 
@@ -781,6 +781,8 @@ void USL_BeginCards()
 	IN_ClearKeysDown();
 }
 
+void US_SaveConfig(void);
+void CFG_SaveConfig(const char *filename);
 void USL_HandleComm(int command)
 {
 	switch (command)
@@ -790,8 +792,12 @@ void USL_HandleComm(int command)
 		return;
 
 	case US_Comm_Quit: /* quit */
-		quit_to_dos = 1;
+		//quit_to_dos = 1;
 		return;
+
+	case US_Comm_SaveSettings:
+		US_SaveConfig();
+		break;
 
 	case US_Comm_NewEasyGame: /* easy game */
 		ck_startingDifficulty = D_Easy;
