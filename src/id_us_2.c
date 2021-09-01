@@ -406,12 +406,12 @@ int USL_ConfirmComm(US_CardCommand command)
 
 	result = 1;
 	ask_user = 0;
-	s3 = "ESC TO BACK OUT";
+	s3 = "B TO BACK OUT";
 	switch (command)
 	{
 	case US_Comm_EndGame:
 		s1 = "REALLY END CURRENT GAME?";
-		s2 = "PRESS Y TO END IT";
+		s2 = "PRESS A TO END IT";
 		if (game_in_progress && game_unsaved)
 			ask_user = 1;
 		break;
@@ -424,7 +424,7 @@ int USL_ConfirmComm(US_CardCommand command)
 
 	case 4:
 		s1 = "YOU'RE IN A GAME";
-		s2 = "PRESS Y TO LOAD GAME";
+		s2 = "PRESS A TO LOAD GAME";
 		if (game_in_progress && game_unsaved)
 			ask_user = 1;
 		break;
@@ -433,7 +433,7 @@ int USL_ConfirmComm(US_CardCommand command)
 	case US_Comm_NewNormalGame:
 	case US_Comm_NewHardGame:
 		s1 = "YOU'RE IN A GAME";
-		s2 = "PRESS Y FOR NEW GAME";
+		s2 = "PRESS A FOR NEW GAME";
 		if (game_in_progress && game_unsaved)
 			ask_user = 1;
 		break;
