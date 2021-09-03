@@ -648,7 +648,13 @@ int main(int argc, char *argv[])
 	// Default to the first episode with all files present.
 	// If no episodes are found, we default to Keen 4, in order
 	// to show the file not found messages.
+	#ifdef EP6
+	ck_currentEpisode = &ck6v15e_episode;
+	#elif EP5
+	ck_currentEpisode = &ck5_episode;
+	#else
 	ck_currentEpisode = &ck4_episode;
+	#endif
 	for (int i = 0; ck_episodes[i]; ++i)
 	{
 		if (ck_episodes[i]->isPresent())
@@ -662,7 +668,7 @@ int main(int argc, char *argv[])
 	bool isAspectCorrected = CFG_GetConfigBool("aspect", true);
 	bool hasBorder = CFG_GetConfigBool("border", true);
 	bool isIntegerScaled = CFG_GetConfigBool("integer", false);
-	bool overrideCopyProtection = CFG_GetConfigBool("ck6_noCreatureQuestion", false);
+	bool overrideCopyProtection = CFG_GetConfigBool("ck6_noCreatureQuestion", true);
 #ifdef CK_ENABLE_PLAYLOOP_DUMPER
 	const char *dumperFilename = NULL;
 #endif
