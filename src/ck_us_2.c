@@ -19,7 +19,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <errno.h>
 #include <stdlib.h>
+#ifndef TEENSY41
 #include <time.h>
+#endif
 
 #include "ck_config.h"
 
@@ -1373,11 +1375,15 @@ bool CK6_CreatureQuestion()
 	int var2 = 0;
 	if (currentCreature == -1)
 	{
+#ifndef TEENSY41
 		time_t t;
 		struct tm *tt;
 		time(&t);
 		tt = localtime(&t);
 		currentCreature = (tt->tm_hour + tt->tm_mday) % 12;
+#else
+		currentCreature = 1;
+#endif
 	}
 
 	CA_UpLevel();

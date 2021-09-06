@@ -34,7 +34,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <stdlib.h>
 #include <string.h>
 
+#ifndef TEENSY41
 #include <time.h>
+#endif
 
 // Check for a parameter in a list of strings
 // Returns index of string found, or -1 if none
@@ -610,7 +612,11 @@ void US_InitRndT(bool randomize)
 {
 	if (randomize)
 	{
+#ifndef TEENSY41
 		us_randomIndex = time(0) & 0xFF;
+#else
+		us_randomIndex = 0;
+#endif
 	}
 	else
 	{
