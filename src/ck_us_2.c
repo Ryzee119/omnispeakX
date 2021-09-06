@@ -17,10 +17,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <errno.h>
 #include <stdlib.h>
 #ifndef TEENSY41
+#include <errno.h>
 #include <time.h>
+#else
+static int errno = 0;
 #endif
 
 #include "ck_config.h"
