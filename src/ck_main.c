@@ -622,6 +622,7 @@ int main(int argc, char *argv[])
 
 #else // !CK_RUN_ACTION_VALIDATOR
 
+#ifndef TEENSY41
 CK_EpisodeDef *ck_episodes[] = {
 	&ck4_episode,
 	&ck5_episode,
@@ -796,4 +797,5 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
+#endif //TEENSY41
 #endif // CK_RUN_ACTION_VALIDATOR
