@@ -4,6 +4,7 @@
 #include "id_in.h"
 #include "id_sd.h"
 #include "ck_cross.h"
+#include "printf.h"
 
 #ifdef CK_RAND_DEBUG
 #include <execinfo.h>
@@ -17,19 +18,18 @@ void CK_Cross_LogMessage(CK_Log_Message_Class_T msgClass, const char *format, ..
 	switch (msgClass)
 	{
 	case CK_LOG_MSG_NORMAL:
-		vfprintf(stderr, format, args);
+		vprintf(format, args);
 		break;
 	case CK_LOG_MSG_WARNING:
-		fprintf(stderr, "Warning: ");
-		vfprintf(stderr, format, args);
+		printf("Warning: ");
+		vprintf(format, args);
 		break;
 	case CK_LOG_MSG_ERROR:
-		fprintf(stderr, "Error: ");
-		vfprintf(stderr, format, args);
+		printf("Error: ");
+		vprintf(format, args);
 		break;
 	}
 	va_end(args);
-	fflush(stderr);
 }
 
 #ifdef CK_RAND_DEBUG
@@ -53,8 +53,7 @@ void CK_Cross_puts(const char *str)
 	// Reason for this wrapper: Maybe a different
 	// mechanism will be used in the future.
 	//puts(str);
-	fprintf(stderr, str);
-	fflush(stderr);
+	printf(str);
 }
 
 int CK_Cross_toupper(int c)
