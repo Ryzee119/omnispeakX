@@ -136,13 +136,14 @@ void MM_Shutdown(void)
 	}
 }
 
+#include <Arduino.h>
 void MM_GetPtr(mm_ptr_t *ptr, unsigned long size)
 {
 	ID_MM_MemBlock *blk = MML_GetNewBlock();
 	//Try to allocate memory, freeing if we can't.
 	do
 	{
-		blk->ptr = malloc(size);
+		blk->ptr = extmem_malloc(size);
 		if (size && !blk->ptr)
 		{
 			CK_Cross_LogMessage(CK_LOG_MSG_WARNING, "MM_GetPtr: Failed to alloc block (%d bytes) with system malloc. Trying to free some space.\n", size);
@@ -186,7 +187,7 @@ void MM_FreePtr(mm_ptr_t *ptr)
 	mm_free = blk;
 
 	//Free its memory.
-	free(blk->ptr);
+	extmem_free(blk->ptr);
 	blk->length = 0;
 	blk->ptr = 0;
 	blk->userptr = 0;
@@ -282,7 +283,7 @@ ID_MM_Arena *MM_ArenaCreate(size_t size)
 {
 	if (size < sizeof(ID_MM_Arena))
 		Quit("Tried to create an arena which was too small.");
-	uint8_t *memblk = (uint8_t *)malloc(size);
+	uint8_t *memblk = (uint8_t *)extmem_malloc(size);
 	if (!memblk)
 		return 0;
 
@@ -323,7 +324,7 @@ void MM_ArenaDestroy(ID_MM_Arena *arena)
 {
 	arena->currentOffset = 0;
 	arena->size = 0;
-	free(arena);
+	extmem_free(arena);
 }
 
 #else
@@ -342,7 +343,7 @@ struct ID_MM_Arena
 
 ID_MM_Arena *MM_ArenaCreate(size_t size)
 {
-	ID_MM_Arena *arena = (ID_MM_Arena *)malloc(sizeof(ID_MM_Arena));
+	ID_MM_Arena *arena = (ID_MM_Arena *)extmem_malloc(sizeof(ID_MM_Arena));
 	arena->arena_size = size;
 	arena->arena_used = 0;
 	arena->data = 0;
@@ -361,10 +362,10 @@ void *MM_ArenaAlloc(ID_MM_Arena *arena, size_t size)
 		lastBlock = lastBlock->next;
 
 	// Allocate and record the block
-	lastBlock->data = malloc(size);
+	lastBlock->data = extmem_malloc(size);
 	lastBlock->size = size;
 	// Add a new tail element.
-	lastBlock->next = (ID_MM_Arena *)malloc(sizeof(ID_MM_Arena));
+	lastBlock->next = (ID_MM_Arena *)extmem_malloc(sizeof(ID_MM_Arena));
 	lastBlock->next->next = 0;
 
 	return lastBlock->data;
@@ -386,12 +387,12 @@ void MM_ArenaReset(ID_MM_Arena *arena)
 	{
 		ID_MM_Arena *nextBlock = block->next;
 		if (nextBlock)
-			free(block->data);
-		free(block);
+			extmem_free(block->data);
+		extmem_free(block);
 		block = nextBlock;
 	}
 	if (arena->next)
-		free(arena->data);
+		extmem_free(arena->data);
 	arena->arena_used = 0;
 	arena->next = 0;
 }
@@ -399,7 +400,7 @@ void MM_ArenaReset(ID_MM_Arena *arena)
 void MM_ArenaDestroy(ID_MM_Arena *arena)
 {
 	MM_ArenaReset(arena);
-	free(arena);
+	extmem_free(arena);
 }
 
 #endif
