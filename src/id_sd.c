@@ -578,8 +578,8 @@ void SD_Default(bool gotit, SD_SoundMode sd, ID_MusicMode sm)
 	if (!gotit)
 	{
 		//Set default audio if no config is found
-		sd = sdm_PC;
-		sm = smm_Off;
+		sd = sdm_AdLib;
+		sm = smm_AdLib;
 	}
 
 	// If Adlib not available, no music, PC Speaker
