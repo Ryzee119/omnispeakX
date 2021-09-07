@@ -1680,7 +1680,7 @@ void CK_SubmitHighScore(int score, uint16_t arg_4)
 		US_SetPrintX(leftMargin);
 
 		//US_LineInput(US_GetPrintX(), US_GetPrintY(), ck_highScores[entryRank].name, 0, 1, 0x39, 0x70);
-		strcpy(ck_highScores[entryRank].name, "N64 Player");
+		strcpy(ck_highScores[entryRank].name, "Teensy Player");
 
 		ck_inHighScores = false;
 	}

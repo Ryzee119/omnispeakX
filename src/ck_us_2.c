@@ -458,7 +458,7 @@ void save_savegame_item(US_CardItem *item)
 	//	strcpy(e->name, "Untitled");
 
 	n = 1;
-	strcpy(e->name, "N64 Player");
+	strcpy(e->name, "Teensy Player");
 
 	/* If the input was not canceled */
 	if (n != 0)
