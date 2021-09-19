@@ -1136,6 +1136,7 @@ void CA_CacheAudioChunk(int16_t chunk)
 		MM_FreePtr(&bigbuffer);
 }
 
+void N64_LoadSound(int16_t);
 void CA_LoadAllSounds(void)
 {
 	int16_t offset; // FIXME: What about a mode differing from 1 or 2?
@@ -1179,6 +1180,7 @@ void CA_LoadAllSounds(void)
 		for (loopvar = 0; loopvar < ca_audInfoE.numSounds; loopvar++, offset++)
 		{
 			CA_CacheAudioChunk(offset);
+			N64_LoadSound(offset);
 		}
 	}
 }

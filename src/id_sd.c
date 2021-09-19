@@ -578,8 +578,8 @@ void SD_Default(bool gotit, SD_SoundMode sd, ID_MusicMode sm)
 	if (!gotit)
 	{
 		//Set default audio if no config is found
-		sd = sdm_PC;
-		sm = smm_Off;
+		sd = sdm_AdLib;
+		sm = smm_AdLib;
 	}
 
 	// If Adlib not available, no music, PC Speaker
@@ -614,6 +614,7 @@ void SD_Shutdown(void)
 	sd_started = false;
 }
 
+void N64_PlaySound(soundnames);
 // Play a sound effect with id 'sound' using the current device
 void SD_PlaySound(soundnames sound)
 {
@@ -639,6 +640,7 @@ void SD_PlaySound(soundnames sound)
 		SD_PC_PlaySound((SD_PCSound *)sd_sfxChunkArray[sound]);
 		break;
 	case sdm_AdLib:
+		N64_PlaySound(sound);
 		SD_AL_PlaySound((SD_AdlibSound *)sd_sfxChunkArray[sound]);
 		break;
 	default:

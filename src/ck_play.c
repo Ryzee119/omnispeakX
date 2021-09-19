@@ -1318,7 +1318,7 @@ void StopMusic(void)
 }
 
 int16_t *ck_levelMusic;
-
+void N64_PlayMusic(int16_t);
 void StartMusic(int16_t level)
 {
 	int16_t song;
@@ -1363,6 +1363,7 @@ void StartMusic(int16_t level)
 			VW_FadeToBlack();
 	}
 #endif
+	N64_PlayMusic(song);
 	SD_StartMusic((SD_MusicTrack *)CA_audio[ca_audInfoE.startMusic + song]);
 }
 
