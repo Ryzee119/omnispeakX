@@ -447,12 +447,16 @@ void save_savegame_item(US_CardItem *item)
 	//fontcolour = 2;
 	VH_Bar(item->x + 1, item->y + 2, 146, 7, 8);
 	e->printXOffset = ck_currentEpisode->printXOffset;
+#ifndef _CONSOLE
 	n = US_LineInput(item->x + 2, item->y + 2, e->name, (e->used ? e->name : NULL), 1, 32, 138);
 
 	/* If they entered no name, give a default */
 	if (strlen(e->name) == 0)
 		strcpy(e->name, "Untitled");
-
+#else
+	n = 1;
+	strcpy(e->name, "N64 Player");
+#endif
 	/* If the input was not canceled */
 	if (n != 0)
 	{
