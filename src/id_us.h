@@ -144,7 +144,8 @@ typedef enum US_CardCommand
 	US_Comm_LoadGame = 4,
 	US_Comm_NewEasyGame = 5,
 	US_Comm_NewNormalGame = 6,
-	US_Comm_NewHardGame = 7
+	US_Comm_NewHardGame = 7,
+	US_Comm_SaveSettings = 8
 } US_CardCommand;
 
 struct US_Card;

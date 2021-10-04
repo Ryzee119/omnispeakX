@@ -625,7 +625,7 @@ void USL_UpLevel()
 {
 	if (!us_cardStackIndex)
 	{
-		USL_ConfirmComm(US_Comm_Quit);
+		//USL_ConfirmComm(US_Comm_Quit);
 		return;
 	}
 
@@ -699,11 +699,13 @@ void USL_UpdateCards(void)
 		ck_us_musicMenuItems[1].state |= US_IS_Disabled;
 	}
 
+#ifndef _CONSOLE
 	/* Joystick and gamepad menu items*/
 	if (true) //!joystick_present[0] )
 		ck_us_configureMenuItems[4].state |= US_IS_Disabled;
 	if (true) //!joystick_present[1] )
 		ck_us_configureMenuItems[5].state |= US_IS_Disabled;
+#endif
 #if 0
 	if ( !joystick_present[0] && !joystick_present[1] )
 		configure_menu_items[6].state |= US_IS_Disabled;
@@ -779,6 +781,9 @@ void USL_BeginCards()
 	IN_ClearKeysDown();
 }
 
+#ifdef _CONSOLE
+void US_SaveConfig(void);
+#endif
 void USL_HandleComm(int command)
 {
 	switch (command)
@@ -802,6 +807,13 @@ void USL_HandleComm(int command)
 	case US_Comm_NewHardGame: /* hard game */
 		ck_startingDifficulty = D_Hard;
 		return;
+
+#ifdef _CONSOLE
+	case US_Comm_SaveSettings:
+		US_Shutdown();
+		CFG_Shutdown();
+		break;
+#endif
 
 	case US_Comm_ReturnToGame:
 	case 4: /* return to game, ? */
