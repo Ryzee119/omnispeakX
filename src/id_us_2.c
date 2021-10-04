@@ -627,7 +627,7 @@ void USL_UpLevel()
 {
 	if (!us_cardStackIndex)
 	{
-		USL_ConfirmComm(US_Comm_Quit);
+		//USL_ConfirmComm(US_Comm_Quit);
 		return;
 	}
 
@@ -781,6 +781,9 @@ void USL_BeginCards()
 	IN_ClearKeysDown();
 }
 
+#ifdef _CONSOLE
+void US_SaveConfig(void);
+#endif
 void USL_HandleComm(int command)
 {
 	switch (command)
@@ -804,6 +807,13 @@ void USL_HandleComm(int command)
 	case US_Comm_NewHardGame: /* hard game */
 		ck_startingDifficulty = D_Hard;
 		return;
+
+#ifdef _CONSOLE
+	case US_Comm_SaveSettings:
+		US_Shutdown();
+		CFG_Shutdown();
+		break;
+#endif
 
 	case US_Comm_ReturnToGame:
 	case 4: /* return to game, ? */
