@@ -38,6 +38,10 @@ size_t FS_Write(const void *ptr, size_t size, size_t nmemb, FS_File file);
 size_t FS_SeekTo(FS_File file, size_t offset);
 void FS_CloseFile(FS_File file);
 
+FS_File FSL_OpenFileInDirCaseInsensitive(const char *dirPath, const char *fileName, bool forWrite);
+FS_File FSL_CreateFileInDir(const char *dirPath, const char *fileName);
+bool FSL_IsDirWritable(const char *dirPath);
+
 // Omnispeak has three search paths, for three different kinds of data files:
 // - Keen Data (The original data files shipped with Keen)
 // - Omnispeak Data (The datafiles shipped with omnispeak: headers, huffman dictionaries, and scripts)
