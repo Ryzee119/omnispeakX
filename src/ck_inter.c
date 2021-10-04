@@ -1691,7 +1691,11 @@ void CK_SubmitHighScore(int score, uint16_t arg_4)
 		US_SetPrintY(entry * 16 + topMargin);
 		US_SetPrintX(leftMargin);
 
+#ifndef _CONSOLE
 		US_LineInput(US_GetPrintX(), US_GetPrintY(), ck_highScores[entryRank].name, 0, 1, 0x39, 0x70);
+#else
+		strcpy(ck_highScores[entryRank].name, "N64 Player");
+#endif
 
 		ck_inHighScores = false;
 	}
