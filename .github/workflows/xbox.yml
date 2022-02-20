@@ -20,8 +20,8 @@ jobs:
 
     - name: Install and Setup Dependencies
       run: |
-        sudo apt-get update -y && sudo apt-get install -y flex bison clang lld unzip
-        git clone https://github.com/XboxDev/nxdk.git --recursive
+        sudo apt-get update -y && sudo apt-get install -y flex bison clang lld llvm unzip
+        git clone --depth 1 --recurse-submodules --shallow-submodules https://github.com/XboxDev/nxdk.git
 
     - name: Get Keen data
       run: |
@@ -33,8 +33,8 @@ jobs:
 
     - name: Compile
       run: |
-        export PATH=$PATH:/usr/lib/llvm-10/bin
-        make -f Makefile.nxdk -j$(nproc) NXDK_DIR=$(pwd)/nxdk
+        eval $($(pwd)/nxdk/bin/activate -s)
+        make -f Makefile.nxdk -j$(nproc)
 
     # Only create artifact on a push
     - if: github.event_name == 'push' 
