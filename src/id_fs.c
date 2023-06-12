@@ -70,6 +70,7 @@ void FS_CloseFile(FS_File file)
 	fclose(file);
 }
 
+#ifndef _CONSOLE
 #if defined(__linux__) && !defined(__STRICT_ANSI__)
 #include <dirent.h>
 #include <fcntl.h>
@@ -254,6 +255,7 @@ size_t FS_GetFileSize(FS_File file)
 }
 
 #endif
+#endif //_CONSOLE
 
 FS_File FS_OpenKeenFile(const char *fileName)
 {

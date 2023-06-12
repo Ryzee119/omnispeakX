@@ -82,7 +82,9 @@ US_CardItem main_menu_items[] = {
 	{US_ITEM_Normal, 0, IN_SC_R, NULL, US_Comm_ReturnToGame, NULL, 0, 0},
 	{US_ITEM_Normal, 0, IN_SC_E, "END GAME", US_Comm_EndGame, NULL, 0, 0},
 	{US_ITEM_Submenu, 0, IN_SC_P, "PADDLE WAR", US_Comm_None, /*paddlewar_menu*/ NULL, 0, 0},
+#ifndef _CONSOLE
 	{US_ITEM_Normal, 0, IN_SC_Q, "QUIT", US_Comm_Quit, NULL, 0, 0},
+#endif
 	{US_ITEM_None, 0, IN_SC_None, NULL, US_Comm_None, NULL, 0, 0}};
 
 //AS:00A2

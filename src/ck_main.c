@@ -406,10 +406,14 @@ void CK_DemoLoop()
 		case 0: // Terminator scroller and Title Screen
 			// If no pixel panning capability
 			// Then the terminator screen isn't shown
+#ifdef _CONSOLE
+			CK_ShowTitleScreen();
+#else
 			if (vl_noPan)
 				CK_ShowTitleScreen();
 			else
 				CK_DrawTerminator();
+#endif
 #if 1					     //DEMO_LOOP_ENABLED
 			break;
 		case 1:
@@ -625,6 +629,7 @@ int main(int argc, char *argv[])
 
 #else // !CK_RUN_ACTION_VALIDATOR
 
+#ifndef _CONSOLE
 CK_EpisodeDef *ck_episodes[] = {
 	&ck4_episode,
 	&ck5_episode,
@@ -803,4 +808,5 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
+#endif //_CONSOLE
 #endif // CK_RUN_ACTION_VALIDATOR

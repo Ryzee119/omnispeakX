@@ -433,6 +433,12 @@ bool US_LineInput(uint16_t x, uint16_t y, char *buf, char *def, bool escok, uint
 			sc = joykey;
 #endif
 
+#ifdef _CONSOLE
+		strcpy(buf, "Console Player");
+		done = true;
+		result = true;
+#endif
+
 		switch (sc)
 		{
 		case IN_SC_LeftArrow:
