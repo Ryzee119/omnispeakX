@@ -36,6 +36,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "id_mm.h"
 #include "id_us.h"
 
+FS_File FSL_OpenFileInDirCaseInsensitive(const char *dirPath, const char *fileName, bool forWrite);
+FS_File FSL_CreateFileInDir(const char *dirPath, const char *fileName);
+bool FSL_IsDirWritable(const char *dirPath);
+
 const char *fs_keenPath;
 const char *fs_omniPath;
 const char *fs_userPath;
@@ -70,6 +74,7 @@ void FS_CloseFile(FS_File file)
 	fclose(file);
 }
 
+#ifndef _CONSOLE
 #if defined(__linux__) && !defined(__STRICT_ANSI__)
 #include <dirent.h>
 #include <fcntl.h>
@@ -254,6 +259,7 @@ size_t FS_GetFileSize(FS_File file)
 }
 
 #endif
+#endif //_CONSOLE
 
 FS_File FS_OpenKeenFile(const char *fileName)
 {
