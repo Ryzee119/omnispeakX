@@ -364,7 +364,7 @@ bool CK_LoadGame(FS_File fp, bool fromMenu)
 {
 	int i;
 	uint16_t cmplen, bufsize;
-	int16_t prevFuses;
+	int16_t prevFuses = 0;
 	CK_object *objprev, *objnext, *moreObj;
 	uint8_t *buf;
 

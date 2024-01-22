@@ -830,7 +830,7 @@ bool CK_US_JoyConfMenuProc(US_CardMsg msg, US_CardItem *item)
 {
 	IN_JoyConfItem which_control;
 	int value;
-	char str[8], *spos;
+	char str[8+1], *spos;
 	int print_x, print_y;
 	static const int8_t deadzone_values[] = {
 		0, 5, 10, 15, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90, -1};
@@ -1051,8 +1051,8 @@ void USL_PlayPaddleWar(void)
 	int16_t ball_y, keen_x, comp_x, bounce_point, ball_real_x, ball_real_y;
 	int16_t old_keen_x, old_comp_x, old_ball_x, old_ball_y;
 	int16_t keen_score = 0, comp_score = 0;
-	int16_t speedup_delay, ball_x_speed;
-	int32_t start_delay;
+	int16_t speedup_delay = 10, ball_x_speed;
+	int32_t start_delay = 70;
 	uint32_t lasttime, timediff;
 	IN_ControlFrame status;
 	int16_t ball_y_speed, ball_x;

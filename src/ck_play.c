@@ -2051,7 +2051,10 @@ void CK_NormalCamera(CK_object *obj)
 		int16_t dx, ax;
 
 		ax = ck6_smashScreenOfs[ck6_smashScreenDistance] + obj->clipRects.unitY2;
+		#pragma GCC diagnostic push
+		#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 		deltaY += (dx - ax); // Undefined behaviour here
+		#pragma GCC diagnostic pop
 	}
 	else
 #endif

@@ -267,7 +267,7 @@ void RF_MarkTileGraphics()
 	// WARNING: As in the original codebase, the given variable is NOT initialized.
 	// This may lead to undefined behaviors in calls to RFL_MarkTileWithSound,
 	// although they aren't reproduced in vanilla Keen 6 in practice.
-	int i;
+	int i = 0;
 	for (int tileY = 0; tileY < rf_mapHeightTiles; ++tileY)
 	{
 		for (int tileX = 0; tileX < rf_mapWidthTiles; ++tileX)
