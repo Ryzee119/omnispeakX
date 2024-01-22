@@ -404,25 +404,25 @@ int USL_ConfirmComm(US_CardCommand command)
 
 	result = 1;
 	ask_user = 0;
-	s3 = "ESC TO BACK OUT";
+	s3 = "B TO BACK OUT";
 	switch (command)
 	{
 	case US_Comm_EndGame:
 		s1 = "REALLY END CURRENT GAME?";
-		s2 = "PRESS Y TO END IT";
+		s2 = "PRESS A TO END IT";
 		if (game_in_progress && game_unsaved)
 			ask_user = 1;
 		break;
 
 	case US_Comm_Quit:
 		s1 = "REALLY QUIT?";
-		s2 = "PRESS Y TO QUIT";
+		s2 = "PRESS A TO QUIT";
 		ask_user = 1;
 		break;
 
 	case 4:
 		s1 = "YOU'RE IN A GAME";
-		s2 = "PRESS Y TO LOAD GAME";
+		s2 = "PRESS A TO LOAD GAME";
 		if (game_in_progress && game_unsaved)
 			ask_user = 1;
 		break;
@@ -431,7 +431,7 @@ int USL_ConfirmComm(US_CardCommand command)
 	case US_Comm_NewNormalGame:
 	case US_Comm_NewHardGame:
 		s1 = "YOU'RE IN A GAME";
-		s2 = "PRESS Y FOR NEW GAME";
+		s2 = "PRESS A FOR NEW GAME";
 		if (game_in_progress && game_unsaved)
 			ask_user = 1;
 		break;
@@ -594,9 +594,9 @@ void US_SelectPrevItem()
 
 void USL_SetMenuFooter(void)
 {
-	footer_str[2] = "Arrows move";
-	footer_str[1] = "Enter selects";
-	footer_str[0] = (us_cardStackIndex != 0) ? "ESC to back out" : "ESC to quit";
+	footer_str[2] = "D-pad move";
+	footer_str[1] = "A selects";
+	footer_str[0] = (us_cardStackIndex != 0) ? "B to back out" : "";
 	USL_SelectCardItem(us_currentCard, us_currentCard->selectedItem, 0);
 	US_DrawCards();
 }
